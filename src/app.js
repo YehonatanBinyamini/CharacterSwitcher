@@ -1,22 +1,19 @@
-const toEnglishButton = document.getElementById('toEnglishButton');
-const resultLabel = document.getElementById('resultLabel');
+const toEnglishButton = document.getElementById("toEnglishButton");
+const toHebrewButton = document.getElementById("toHebrewButton");
+const resultLabel = document.getElementById("resultLabel");
 
-// Add event listeners to the buttons
-toHebrewButton.addEventListener('click', toHebrew);
-toEnglishButton.addEventListener('click', toEnglish);
-const clearButton = document.getElementById('clearButton');
+toHebrewButton.addEventListener("click", toHebrew);
+toEnglishButton.addEventListener("click", toEnglish);
+const clearButton = document.getElementById("clearButton");
 
-// Add event listener to the Clear button
-clearButton.addEventListener('click', clearInput);
+clearButton.addEventListener("click", clearInput);
 
-// Function to clear the input field
 function clearInput() {
   const inputField = document.querySelector("#stringInput");
   inputField.value = "";
   resultLabel.textContent = "";
 }
 
-// Function to switch characters to Hebrew
 function toHebrew(e) {
   e.preventDefault();
   const stringInput = document.querySelector("#stringInput").value;
@@ -25,7 +22,6 @@ function toHebrew(e) {
   resultLabel.textContent = switchedString;
 }
 
-// Function to switch characters to English
 function toEnglish(e) {
   e.preventDefault();
   const stringInput = document.querySelector("#stringInput").value;
@@ -33,7 +29,6 @@ function toEnglish(e) {
   const switchedString = switchCharacters(stringInput, hebrewToEnglish);
   resultLabel.textContent = switchedString;
 }
-
 
 function switchCharacters(string, dictionary) {
   let switchedString = "";
@@ -79,8 +74,38 @@ const englishToHebrew = {
   ",": "ת",
   ".": "ץ",
   "/": ".",
+  Q: "/",
+  W: "'",
+  E: "ק",
+  R: "ר",
+  T: "א",
+  Y: "ט",
+  U: "ו",
+  I: "ן",
+  O: "ם",
+  P: "פ",
   "{": "}",
   "}": "{",
+  A: "ש",
+  S: "ד",
+  D: "ג",
+  F: "כ",
+  G: "ע",
+  H: "י",
+  J: "ח",
+  K: "ל",
+  L: "ך",
+  ";": "ף",
+  '"': "<",
+  Z: "ז",
+  X: "ס",
+  C: "ב",
+  V: "ה",
+  B: "נ",
+  N: "מ",
+  M: "צ",
+  "<": "ת",
+  ">": "ץ",
 };
 
 const hebrewToEnglish = {
