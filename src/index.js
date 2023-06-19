@@ -1,6 +1,8 @@
 const { app, Menu, MenuItem, globalShortcut, BrowserWindow } = require("electron");
 const path = require("path");
-const reload = require("electron-reload");
+
+const logoSrc = path.join(__dirname, "assets/images/logo.png")
+
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -10,12 +12,16 @@ if (require("electron-squirrel-startup")) {
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
+    // icon: path.resolve(__dirname, "src/assets/images/logo.png"),
     width: 600,
     height: 500,
     webPreferences: {
       nodeIntegration: true,
     },
   });
+
+
+  mainWindow.setIcon(logoSrc)
 
   const contextMenu = new Menu();
   contextMenu.append(new MenuItem({
