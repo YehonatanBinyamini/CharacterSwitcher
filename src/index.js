@@ -1,5 +1,6 @@
 const { app, Menu, MenuItem, globalShortcut, BrowserWindow } = require("electron");
 const path = require("path");
+require('update-electron-app')()
 
 const logoSrc = path.join(__dirname, "assets/images/logo.png")
 
