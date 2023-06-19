@@ -2,16 +2,43 @@ const toEnglishButton = document.getElementById("toEnglishButton");
 const toHebrewButton = document.getElementById("toHebrewButton");
 const resultLabel = document.getElementById("resultLabel");
 
+const divResultBox = document.getElementById("result-box");
+
+const copyButton = document.getElementById("text-cpy-button");
+copyButton.textContent = "העתק";
+copyButton.addEventListener("click", copyResultLabel);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "F2") {
+    copyResultLabel(e);
+  }
+});
+
 toHebrewButton.addEventListener("click", toHebrew);
 toEnglishButton.addEventListener("click", toEnglish);
 const clearButton = document.getElementById("clearButton");
 
 clearButton.addEventListener("click", clearInput);
 
+function copyResultLabel(e) {
+  e.preventDefault();
+  navigator.clipboard
+    .writeText(resultLabel.textContent)
+    .then(() => {
+      copyButton.textContent = "!הועתק";
+      setTimeout(() => {
+        copyButton.textContent = "העתק";
+      }, 1500);
+    })
+    .catch((error) => {
+      console.error("Failed to copy text: ", error);
+    });
+}
+
 function clearInput() {
   const inputField = document.querySelector("#stringInput");
   inputField.value = "";
   resultLabel.textContent = "";
+  divResultBox.classList.add("result-box");
 }
 
 function toHebrew(e) {
@@ -20,6 +47,8 @@ function toHebrew(e) {
   console.log(stringInput);
   const switchedString = switchCharacters(stringInput, englishToHebrew);
   resultLabel.textContent = switchedString;
+  if (stringInput.length > 0) divResultBox.classList.remove("result-box");
+
 }
 
 function toEnglish(e) {
@@ -28,6 +57,7 @@ function toEnglish(e) {
   console.log(stringInput);
   const switchedString = switchCharacters(stringInput, hebrewToEnglish);
   resultLabel.textContent = switchedString;
+  if (stringInput.length > 0) divResultBox.classList.remove("result-box");
 }
 
 function switchCharacters(string, dictionary) {

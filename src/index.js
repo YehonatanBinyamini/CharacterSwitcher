@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, Menu, MenuItem, globalShortcut, BrowserWindow } = require("electron");
 const path = require("path");
 const reload = require("electron-reload");
 
@@ -11,19 +11,39 @@ if (require("electron-squirrel-startup")) {
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 600,
-    height: 400,
+    height: 500,
     webPreferences: {
       nodeIntegration: true,
     },
   });
+
+  const contextMenu = new Menu();
+  contextMenu.append(new MenuItem({
+    label: 'הדבק',
+    role: 'paste',
+  }));
+
+  // Register the context menu to the main window
+  mainWindow.webContents.on('context-menu', (e, params) => {
+    contextMenu.popup(mainWindow, params.x, params.y);
+  });
+
+  globalShortcut.register('F1', () => {
+    mainWindow.webContents.paste();
+  });
+
+  
   mainWindow.once("ready-to-show", () => {
     mainWindow.show();
   });
-
+  
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, "index.html"));
 };
 
+app.on('will-quit', () => {
+  globalShortcut.unregister('F1');
+});
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
