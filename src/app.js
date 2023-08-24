@@ -48,7 +48,6 @@ function toHebrew(e) {
   const switchedString = switchCharacters(stringInput, englishToHebrew);
   resultLabel.textContent = switchedString;
   if (stringInput.length > 0) divResultBox.classList.remove("result-box");
-
 }
 
 function toEnglish(e) {

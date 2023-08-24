@@ -1,9 +1,14 @@
-const { app, Menu, MenuItem, globalShortcut, BrowserWindow } = require("electron");
+const {
+  app,
+  Menu,
+  MenuItem,
+  globalShortcut,
+  BrowserWindow,
+} = require("electron");
 const path = require("path");
-require('update-electron-app')()
+// require('update-electron-app')()
 
-const logoSrc = path.join(__dirname, "assets/images/logo.png")
-
+const logoSrc = path.join(__dirname, "assets/images/logo.png");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -13,7 +18,7 @@ if (require("electron-squirrel-startup")) {
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
-    // icon: path.resolve(__dirname, "src/assets/images/logo.png"),
+    icon: path.resolve(__dirname, "assets/images/logo.png"),
     width: 600,
     height: 500,
     webPreferences: {
@@ -21,35 +26,33 @@ const createWindow = () => {
     },
   });
 
-
-  mainWindow.setIcon(logoSrc)
+  mainWindow.setIcon(logoSrc);
 
   const contextMenu = new Menu();
-  contextMenu.append(new MenuItem({
-    label: 'הדבק',
-    role: 'paste',
-  }));
+  contextMenu.append(
+    new MenuItem({
+      label: "הדבק",
+      role: "paste",
+    })
+  );
 
-  // Register the context menu to the main window
-  mainWindow.webContents.on('context-menu', (e, params) => {
+  mainWindow.webContents.on("context-menu", (e, params) => {
     contextMenu.popup(mainWindow, params.x, params.y);
   });
 
-  globalShortcut.register('F1', () => {
+  globalShortcut.register("F1", () => {
     mainWindow.webContents.paste();
   });
 
-  
   mainWindow.once("ready-to-show", () => {
     mainWindow.show();
   });
-  
-  // and load the index.html of the app.
+
   mainWindow.loadFile(path.join(__dirname, "index.html"));
 };
 
-app.on('will-quit', () => {
-  globalShortcut.unregister('F1');
+app.on("will-quit", () => {
+  globalShortcut.unregister("F1");
 });
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
